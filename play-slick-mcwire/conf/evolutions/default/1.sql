@@ -1,0 +1,15 @@
+# --- !Ups
+
+CREATE TABLE "Users" ("id" BIGSERIAL NOT NULL PRIMARY KEY, "username" VARCHAR NOT NULL, "password_hash" VARCHAR NOT NULL);
+CREATE TABLE "LoginLogs" ("id" BIGSERIAL NOT NULL PRIMARY KEY, "user_id" BIGSERIAL NOT NULL, "login_time" TIMESTAMP NOT NULL);
+
+ALTER TABLE "LoginLogs" ADD CONSTRAINT "LoginLog_User_FK"
+  FOREIGN KEY("user_id") REFERENCES "Users"("id")
+  ON UPDATE NO ACTION ON DELETE CASCADE;
+
+# --- !Downs
+
+ALTER TABLE "LoginLogs" DROP CONSTRAINT "LoginLog_User_FK";
+
+DROP TABLE "Users"
+DROP TABLE "LoginLogs"
