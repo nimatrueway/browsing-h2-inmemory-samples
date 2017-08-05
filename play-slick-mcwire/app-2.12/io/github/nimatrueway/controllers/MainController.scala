@@ -1,27 +1,25 @@
 package io.github.nimatrueway.controllers
 
-import javax.swing.JOptionPane
-
 import io.github.nimatrueway.entities.{LoginLogDao, UserDao}
 import play.api.mvc._
-import slick.backend.DatabaseConfig
-import slick.driver.JdbcProfile
+import slick.basic.DatabaseConfig
+import slick.jdbc.JdbcProfile
 
 import scala.concurrent.ExecutionContext
-import scala.io.StdIn
 
 class MainController(
+  controllerComponents: ControllerComponents,
   executionContext: ExecutionContext,
   dbConfig: DatabaseConfig[JdbcProfile],
   userDao: UserDao,
   loginLogDao: LoginLogDao
 ) {
 
-  import dbConfig.driver.api._
+  val actionBuilder = DefaultActionBuilder(controllerComponents.parsers.defaultBodyParser)(executionContext)
+  implicit val ec = executionContext
+  import dbConfig.profile.api._
 
-  def nimaLoginCount = Action.async {
-    implicit val ec = executionContext
-
+  def nimaLoginCount = actionBuilder.async {
     val query = userDao.query.filter(_.username === "nima") joinLeft loginLogDao.query on { (user, loginLog) =>
       user.id === loginLog.userId
     } length

@@ -1,14 +1,14 @@
 package io.github.nimatrueway.entities
 
-import slick.backend.DatabaseConfig
-import slick.driver.JdbcProfile
+import slick.basic.DatabaseConfig
+import slick.jdbc.JdbcProfile
 
 class UserDao(val dbConfig: DatabaseConfig[JdbcProfile]) {
-  import dbConfig.driver.api._
+  import dbConfig.profile.api._
   val query = TableQuery[UserTable]
 
   class UserTable(tag: Tag) extends Table[User](tag, "Users") {
-    import dbConfig.driver.api._
+    import dbConfig.profile.api._
 
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def username = column[String]("username")
