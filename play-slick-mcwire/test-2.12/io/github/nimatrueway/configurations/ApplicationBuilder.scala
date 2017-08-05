@@ -18,7 +18,7 @@ object ApplicationBuilder {
 
   def build = new MyApplicationComponents(testApplicationContext).application
 
-  class MyTestApplication extends MyApplication(testApplicationContext) with MyApplicationComponents {
+  class MyTestApplication extends MyApplicationComponents(testApplicationContext) with MyApplicationComponents {
     override lazy val someService: SomeService = TestMocks.SomeServiceMocked
   }
 
