@@ -6,6 +6,8 @@ import play.core.DefaultWebCommands
 
 object ApplicationBuilder {
 
+  implicit def getApplication[T <: MyTestApplication](t: T): Application = t.application
+
   val testApplicationContext = ApplicationLoader.Context(
     environment = Environment.simple(),
     sourceMapper = None,
@@ -15,5 +17,17 @@ object ApplicationBuilder {
   )
 
   def build = new MyApplicationComponents(testApplicationContext).application
+
+  class MyTestApplication extends MyApplication(testApplicationContext) with MyApplicationComponents {
+    override lazy val someService: SomeService = TestMocks.SomeServiceMocked
+  }
+
+}
+
+object TestMocks {
+
+  object SomeServiceMocked extends SomeService {
+    override def giveAString: String = "MockedApplication"
+  }
 
 }

@@ -12,9 +12,16 @@ class MainSpec extends PlaySpec {
   "nimaLoginCount() should return nima's loginCounts after all evolutions-scripts are applied" in {
     H2ServerBuilder.start
     val getStudentsFakeRequest = FakeRequest(routes.MainController.nimaLoginCount())
-    val resultFuture = route(ApplicationBuilder.build, getStudentsFakeRequest).get
+    val resultFuture = route(new MyTestApplication, getStudentsFakeRequest).get
     status(resultFuture) mustEqual OK
     contentAsString(resultFuture) mustEqual "5"
+  }
+
+  "Test mocking modules" in {
+    val getStudentsFakeRequest = FakeRequest(routes.MainController.someServiceService())
+    val resultFuture = route(new MyTestApplication, getStudentsFakeRequest).get
+    status(resultFuture) mustEqual OK
+    contentAsString(resultFuture) mustEqual "MockedApplication"
   }
 
 }
