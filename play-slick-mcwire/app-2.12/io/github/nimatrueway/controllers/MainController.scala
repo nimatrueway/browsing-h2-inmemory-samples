@@ -1,6 +1,7 @@
 package io.github.nimatrueway.controllers
 
 import io.github.nimatrueway.entities.{LoginLogDao, UserDao}
+import io.github.nimatrueway.services.SomeService
 import play.api.mvc._
 import slick.basic.DatabaseConfig
 import slick.jdbc.JdbcProfile
@@ -12,7 +13,8 @@ class MainController(
   executionContext: ExecutionContext,
   dbConfig: DatabaseConfig[JdbcProfile],
   userDao: UserDao,
-  loginLogDao: LoginLogDao
+  loginLogDao: LoginLogDao,
+  someService: SomeService
 ) {
 
   val actionBuilder = DefaultActionBuilder(controllerComponents.parsers.defaultBodyParser)(executionContext)
@@ -29,6 +31,10 @@ class MainController(
     loginCountFuture map { loginCount =>
       Results.Ok(s"${loginCount}")
     }
+  }
+
+  def someServiceService() = actionBuilder {
+    Results.Ok(someService.giveAString)
   }
 
 }

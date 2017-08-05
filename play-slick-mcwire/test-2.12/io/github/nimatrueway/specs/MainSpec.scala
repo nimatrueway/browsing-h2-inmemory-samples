@@ -3,8 +3,8 @@ package io.github.nimatrueway.specs
 import io.github.nimatrueway.configurations._
 import org.scalatestplus.play.PlaySpec
 import play.api.test.FakeRequest
-
 import TestHelpers._
+import io.github.nimatrueway.configurations.ApplicationBuilder.MyTestApplication
 import io.github.nimatrueway.controllers.routes
 
 class MainSpec extends PlaySpec {

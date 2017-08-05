@@ -1,5 +1,6 @@
 package io.github.nimatrueway.configurations
 
+import io.github.nimatrueway.services.SomeService
 import play.api._
 import play.api.inject._
 import play.core.DefaultWebCommands
@@ -18,7 +19,7 @@ object ApplicationBuilder {
 
   def build = new MyApplicationComponents(testApplicationContext).application
 
-  class MyTestApplication extends MyApplicationComponents(testApplicationContext) with MyApplicationComponents {
+  class MyTestApplication extends MyApplicationComponents(testApplicationContext) {
     override lazy val someService: SomeService = TestMocks.SomeServiceMocked
   }
 

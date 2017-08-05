@@ -1,1 +1,2 @@
 GET  /nimaLoginCount  io.github.nimatrueway.controllers.MainController.nimaLoginCount
+GET  /someServiceService  io.github.nimatrueway.controllers.MainController.someServiceService

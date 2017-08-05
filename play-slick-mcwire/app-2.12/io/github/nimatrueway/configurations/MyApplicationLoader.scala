@@ -4,6 +4,7 @@ import io.github.nimatrueway.entities._
 import io.github.nimatrueway.controllers.MainController
 import _root_.controllers.AssetsComponents
 import com.softwaremill.macwire._
+import io.github.nimatrueway.services.{SomeService, SomeServiceImpl}
 import play.api.ApplicationLoader.Context
 import play.api._
 import play.api.i18n._
@@ -38,6 +39,7 @@ trait MyApplicationModules { this: BuiltInComponentsFromContext with DatabaseMod
   lazy val userDao = wire[UserDao]
   lazy val loginLogDao = wire[LoginLogDao]
   lazy val mainController = wire[MainController]
+  lazy val someService: SomeService = wire[SomeServiceImpl]
 }
 
 trait DatabaseModule extends HikariCPComponents with SlickComponents with EvolutionsComponents {
