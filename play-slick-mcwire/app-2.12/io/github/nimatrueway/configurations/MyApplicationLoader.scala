@@ -14,7 +14,6 @@ import play.api.db.{DBApi, HikariCPComponents}
 import play.api.db.evolutions.EvolutionsComponents
 import play.api.db.slick.evolutions.SlickDBApi
 import play.api.db.slick.{DbName, SlickComponents}
-import play.api.mvc.{ControllerComponents, DefaultControllerComponents}
 import slick.basic.DatabaseConfig
 import slick.jdbc.JdbcProfile
 
@@ -27,19 +26,14 @@ class MyApplicationComponents(context: Context)
      with AssetsComponents
      with I18nComponents
      with play.filters.HttpFiltersComponents
-     with MyApplicationModules
+     with MyModules
      with DatabaseModule
 {
-  private[this] lazy val prefix = "/"
   override def configuration: Configuration = super[BuiltInComponentsFromContext].configuration
-  lazy val router: Router = wire[Routes]
-}
-
-trait MyApplicationModules { this: BuiltInComponentsFromContext with DatabaseModule =>
-  lazy val userDao = wire[UserDao]
-  lazy val loginLogDao = wire[LoginLogDao]
-  lazy val mainController = wire[MainController]
-  lazy val someService: SomeService = wire[SomeServiceImpl]
+  lazy val router: Router = {
+    implicit val prefix = "/"
+    wire[Routes]
+  }
 }
 
 trait DatabaseModule extends HikariCPComponents with SlickComponents with EvolutionsComponents {
